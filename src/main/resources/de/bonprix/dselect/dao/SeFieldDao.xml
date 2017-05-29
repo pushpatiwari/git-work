@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.bonprix.dselect.dao.SeFieldDao">
+
+
+	<select id="fetchField" resultType="de.bonprix.dselect.model.SeField">
+
+		SELECT sf.Field_Id as id,
+		sf.Field_Name as name,
+		sf.Field_Address as address,
+		sf.Field_Dob as dob,
+		sf.Field_OnFacebook as onFacebook,
+		sf.Field_Country as country
+		from
+		SCOTT.SeField sf
+
+	</select>
+
+
+	<insert id="insertSeField" parameterType="java.util.List">
+
+		INSERT ALL
+		<foreach collection="list" item="element" index="index"
+			separator=" ">
+			INTO scott.seField
+			(Field_Id,
+			Field_Name,
+			Field_Address,
+			Field_Dob,
+			Field_OnFacebook,
+			Field_Country
+			)
+			VALUES(
+			element.seqSeField.NEXTVAL,
+			#{element.name},
+			#{element.address},
+			#{element.dob},
+			#{element.onFacebook},
+			#{element.country}
+			)
+
+		</foreach>
+		SELECT * FROM dual
+	</insert>
+
+</mapper>
